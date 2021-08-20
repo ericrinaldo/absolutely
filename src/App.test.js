@@ -1,8 +1,23 @@
-import { render, screen } from '@testing-library/react';
+import { Suspense } from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+jest.mock('components', () => ({
+  Button: (props) => (
+    <button type='button'>{props.text}</button>
+  ),
+}));
+
+
+test('Default img is rendered when Logo is undefined in state', async () => {
+  render(
+    <Suspense fallback="loading...">
+      <App />
+    </Suspense>
+  );
+  await waitFor(() => expect(screen.queryByText('loading...')).not.toBeInTheDocument());
+
+  screen.getByText('Click');
 });
