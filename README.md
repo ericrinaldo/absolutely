@@ -1,1 +1,3 @@
 minimal absolute import example with jest mock that resolves
+
+This project was bootstrapped with Vite.
